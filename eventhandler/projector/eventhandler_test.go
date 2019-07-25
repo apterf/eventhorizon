@@ -44,7 +44,7 @@ func TestEventHandler_CreateModel(t *testing.T) {
 	event := eh.NewEventForAggregate(mocks.EventType, eventData, timestamp,
 		mocks.AggregateType, id, 1)
 	entity := &mocks.SimpleModel{
-		ID: id,
+		ID: id.String(),
 	}
 	repo.LoadErr = eh.RepoError{
 		Err: eh.ErrEntityNotFound,
@@ -80,11 +80,11 @@ func TestEventHandler_UpdateModel(t *testing.T) {
 	event := eh.NewEventForAggregate(mocks.EventType, eventData, timestamp,
 		mocks.AggregateType, id, 1)
 	entity := &mocks.SimpleModel{
-		ID: id,
+		ID: id.String(),
 	}
 	repo.Entity = entity
 	projector.newEntity = &mocks.SimpleModel{
-		ID:      id,
+		ID:      id.String(),
 		Content: "updated",
 	}
 	if err := handler.HandleEvent(ctx, event); err != nil {
@@ -117,11 +117,11 @@ func TestEventHandler_UpdateModelWithVersion(t *testing.T) {
 	event := eh.NewEventForAggregate(mocks.EventType, eventData, timestamp,
 		mocks.AggregateType, id, 1)
 	entity := &mocks.Model{
-		ID: id,
+		ID: id.String(),
 	}
 	repo.Entity = entity
 	projector.newEntity = &mocks.Model{
-		ID:      id,
+		ID:      id.String(),
 		Version: 1,
 		Content: "version 1",
 	}
@@ -155,18 +155,18 @@ func TestEventHandler_UpdateModelWithEventsOutOfOrder(t *testing.T) {
 	event := eh.NewEventForAggregate(mocks.EventType, eventData, timestamp,
 		mocks.AggregateType, id, 3)
 	entity := &mocks.Model{
-		ID:      id,
+		ID:      id.String(),
 		Version: 1,
 		Content: "version 1",
 	}
 	newEntity := &mocks.Model{
-		ID:      id,
+		ID:      id.String(),
 		Version: 2,
 		Content: "version 2",
 	}
 	repo.Entity = entity
 	projector.newEntity = &mocks.Model{
-		ID:      id,
+		ID:      id.String(),
 		Version: 3,
 		Content: "version 3",
 	}
@@ -204,7 +204,7 @@ func TestEventHandler_DeleteModel(t *testing.T) {
 	event := eh.NewEventForAggregate(mocks.EventType, eventData, timestamp,
 		mocks.AggregateType, id, 1)
 	entity := &mocks.SimpleModel{
-		ID: id,
+		ID: id.String(),
 	}
 	repo.Entity = entity
 	projector.newEntity = nil

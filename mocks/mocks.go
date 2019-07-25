@@ -135,7 +135,7 @@ func (t CommandOther2) CommandType() eh.CommandType     { return CommandOther2Ty
 
 // Model is a mocked read model, useful in testing.
 type Model struct {
-	ID        uuid.UUID `json:"id"         bson:"_id"`
+	ID        string    `json:"id"         bson:"_id"`
 	Version   int       `json:"version"    bson:"version"`
 	Content   string    `json:"content"    bson:"content"`
 	CreatedAt time.Time `json:"created_at" bson:"created_at"`
@@ -146,7 +146,11 @@ var _ = eh.Versionable(&Model{})
 
 // EntityID implements the EntityID method of the eventhorizon.Entity interface.
 func (m *Model) EntityID() uuid.UUID {
-	return m.ID
+	id, err := uuid.Parse(m.ID)
+	if err != nil {
+		return uuid.Nil
+	}
+	return id
 }
 
 // AggregateVersion implements the AggregateVersion method of the eventhorizon.Versionable interface.
@@ -156,15 +160,19 @@ func (m *Model) AggregateVersion() int {
 
 // SimpleModel is a mocked read model, useful in testing, without a version.
 type SimpleModel struct {
-	ID      uuid.UUID `json:"id"         bson:"_id"`
-	Content string    `json:"content"    bson:"content"`
+	ID      string `json:"id"         bson:"_id"`
+	Content string `json:"content"    bson:"content"`
 }
 
 var _ = eh.Entity(&SimpleModel{})
 
 // EntityID implements the EntityID method of the eventhorizon.Entity interface.
 func (m *SimpleModel) EntityID() uuid.UUID {
-	return m.ID
+	id, err := uuid.Parse(m.ID)
+	if err != nil {
+		return uuid.Nil
+	}
+	return id
 }
 
 // CommandHandler is a mocked eventhorizon.CommandHandler, useful in testing.

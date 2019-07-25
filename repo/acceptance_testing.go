@@ -65,15 +65,16 @@ func AcceptanceTest(t *testing.T, ctx context.Context, repo eh.ReadWriteRepo) {
 	}
 
 	// Save and find one item.
+	entity1ID := uuid.New()
 	entity1 := &mocks.Model{
-		ID:        uuid.New(),
+		ID:        entity1ID.String(),
 		Content:   "entity1",
 		CreatedAt: time.Date(2009, time.November, 10, 23, 0, 0, 0, time.UTC),
 	}
 	if err = repo.Save(ctx, entity1); err != nil {
 		t.Error("there should be no error:", err)
 	}
-	entity, err = repo.Find(ctx, entity1.ID)
+	entity, err = repo.Find(ctx, entity1ID)
 	if err != nil {
 		t.Error("there should be no error:", err)
 	}
@@ -102,7 +103,7 @@ func AcceptanceTest(t *testing.T, ctx context.Context, repo eh.ReadWriteRepo) {
 	if err = repo.Save(ctx, entity1Alt); err != nil {
 		t.Error("there should be no error:", err)
 	}
-	entity, err = repo.Find(ctx, entity1Alt.ID)
+	entity, err = repo.Find(ctx, entity1ID)
 	if err != nil {
 		t.Error("there should be no error:", err)
 	}
@@ -111,15 +112,16 @@ func AcceptanceTest(t *testing.T, ctx context.Context, repo eh.ReadWriteRepo) {
 	}
 
 	// Save with another ID.
+	entity2ID := uuid.New()
 	entity2 := &mocks.Model{
-		ID:        uuid.New(),
+		ID:        entity2ID.String(),
 		Content:   "entity2",
 		CreatedAt: time.Date(2009, time.November, 10, 23, 0, 0, 0, time.UTC),
 	}
 	if err = repo.Save(ctx, entity2); err != nil {
 		t.Error("there should be no error:", err)
 	}
-	entity, err = repo.Find(ctx, entity2.ID)
+	entity, err = repo.Find(ctx, entity2ID)
 	if err != nil {
 		t.Error("there should be no error:", err)
 	}
@@ -140,10 +142,10 @@ func AcceptanceTest(t *testing.T, ctx context.Context, repo eh.ReadWriteRepo) {
 	}
 
 	// Remove item.
-	if err := repo.Remove(ctx, entity1Alt.ID); err != nil {
+	if err := repo.Remove(ctx, entity1ID); err != nil {
 		t.Error("there should be no error:", err)
 	}
-	entity, err = repo.Find(ctx, entity1Alt.ID)
+	entity, err = repo.Find(ctx, entity1ID)
 	if rrErr, ok := err.(eh.RepoError); !ok || rrErr.Err != eh.ErrEntityNotFound {
 		t.Error("there should be a ErrEntityNotFound error:", err)
 	}
@@ -152,7 +154,7 @@ func AcceptanceTest(t *testing.T, ctx context.Context, repo eh.ReadWriteRepo) {
 	}
 
 	// Remove non-existing item.
-	err = repo.Remove(ctx, entity1Alt.ID)
+	err = repo.Remove(ctx, entity1ID)
 	if rrErr, ok := err.(eh.RepoError); !ok || rrErr.Err != eh.ErrEntityNotFound {
 		t.Error("there should be a ErrEntityNotFound error:", err)
 	}

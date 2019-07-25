@@ -49,8 +49,9 @@ func TestReadRepo(t *testing.T) {
 }
 
 func extraRepoTests(t *testing.T, ctx context.Context) {
+	id := uuid.New()
 	simpleModel := &mocks.SimpleModel{
-		ID:      uuid.New(),
+		ID:      id.String(),
 		Content: "simpleModel",
 	}
 
@@ -59,7 +60,7 @@ func extraRepoTests(t *testing.T, ctx context.Context) {
 		Entity: simpleModel,
 	}
 	r := NewRepo(baseRepo)
-	entity, err := r.Find(ctx, simpleModel.ID)
+	entity, err := r.Find(ctx, id)
 	if err != nil {
 		t.Error("there should be no error:", err)
 	}
@@ -70,7 +71,7 @@ func extraRepoTests(t *testing.T, ctx context.Context) {
 		t.Error("the item should have been read from the store")
 	}
 	baseRepo.FindCalled = false
-	entity, err = r.Find(ctx, simpleModel.ID)
+	entity, err = r.Find(ctx, id)
 	if err != nil {
 		t.Error("there should be no error:", err)
 	}
@@ -97,7 +98,7 @@ func extraRepoTests(t *testing.T, ctx context.Context) {
 		t.Error("the item should have been read from the store")
 	}
 	baseRepo.FindCalled = false
-	entity, err = r.Find(ctx, simpleModel.ID)
+	entity, err = r.Find(ctx, id)
 	if err != nil {
 		t.Error("there should be no error:", err)
 	}
@@ -113,7 +114,7 @@ func extraRepoTests(t *testing.T, ctx context.Context) {
 		Entity: simpleModel,
 	}
 	r = NewRepo(baseRepo)
-	entity, err = r.Find(ctx, simpleModel.ID)
+	entity, err = r.Find(ctx, id)
 	if err != nil {
 		t.Error("there should be no error:", err)
 	}
@@ -130,7 +131,7 @@ func extraRepoTests(t *testing.T, ctx context.Context) {
 		t.Error("the item should be saved")
 	}
 	baseRepo.FindCalled = false
-	entity, err = r.Find(ctx, simpleModel.ID)
+	entity, err = r.Find(ctx, id)
 	if err != nil {
 		t.Error("there should be no error:", err)
 	}
@@ -146,7 +147,7 @@ func extraRepoTests(t *testing.T, ctx context.Context) {
 		Entity: simpleModel,
 	}
 	r = NewRepo(baseRepo)
-	entity, err = r.Find(ctx, simpleModel.ID)
+	entity, err = r.Find(ctx, id)
 	if err != nil {
 		t.Error("there should be no error:", err)
 	}
@@ -156,11 +157,11 @@ func extraRepoTests(t *testing.T, ctx context.Context) {
 	if !baseRepo.FindCalled {
 		t.Error("the item should have been read from the store")
 	}
-	if err := r.Remove(ctx, simpleModel.ID); err != nil {
+	if err := r.Remove(ctx, id); err != nil {
 		t.Error("there should be no error:", err)
 	}
 	baseRepo.FindCalled = false
-	entity, err = r.Find(ctx, simpleModel.ID)
+	entity, err = r.Find(ctx, id)
 	if err != nil {
 		t.Error("there should be no error:", err)
 	}
@@ -180,7 +181,7 @@ func extraRepoTests(t *testing.T, ctx context.Context) {
 		time.Now(), mocks.AggregateType, simpleModel.EntityID(), 1)
 	r.Notify(ctx, event)
 	baseRepo.FindCalled = false
-	entity, err = r.Find(ctx, simpleModel.ID)
+	entity, err = r.Find(ctx, id)
 	if err != nil {
 		t.Error("there should be no error:", err)
 	}
