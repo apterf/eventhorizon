@@ -44,7 +44,7 @@ func (p *Projector) Project(ctx context.Context,
 	switch event.EventType() {
 	case Created:
 		// Set the ID when first created.
-		model.ID = event.AggregateID()
+		model.ID = event.AggregateID().String()
 		model.Items = []*TodoItem{} // Prevents "null" in JSON.
 		model.CreatedAt = TimeNow()
 	case Deleted:

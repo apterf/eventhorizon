@@ -30,7 +30,7 @@ func TestModelJSON(t *testing.T) {
 	// Don't use keys for init, we want to get compiler warnings if we haven't
 	// used some fields.
 	l := &TodoList{
-		id,
+		id.String(),
 		1,
 		[]*TodoItem{
 			{

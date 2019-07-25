@@ -147,7 +147,7 @@ func TestCreate(t *testing.T) {
 		t.Error("the item should be a todo list")
 	}
 	expected := &domain.TodoList{
-		ID:        id,
+		ID:        id.String(),
 		Version:   1,
 		Items:     []*domain.TodoItem{},
 		CreatedAt: domain.TimeNow(),
@@ -258,7 +258,7 @@ func TestAddItem(t *testing.T) {
 		t.Error("the item should be a todo list")
 	}
 	expected := &domain.TodoList{
-		ID:      id,
+		ID:      id.String(),
 		Version: 2,
 		Items: []*domain.TodoItem{
 			{
@@ -332,7 +332,7 @@ func TestRemoveItem(t *testing.T) {
 		t.Error("the item should be a todo list")
 	}
 	expected := &domain.TodoList{
-		ID:        id,
+		ID:        id.String(),
 		Version:   3,
 		Items:     []*domain.TodoItem{},
 		CreatedAt: domain.TimeNow(),
@@ -416,7 +416,7 @@ func TestRemoveCompleted(t *testing.T) {
 		t.Error("the item should be a todo list")
 	}
 	expected := &domain.TodoList{
-		ID:      id,
+		ID:      id.String(),
 		Version: 5,
 		Items: []*domain.TodoItem{
 			{
@@ -490,7 +490,7 @@ func TestSetItemDesc(t *testing.T) {
 		t.Error("the item should be a todo list")
 	}
 	expected := &domain.TodoList{
-		ID:      id,
+		ID:      id.String(),
 		Version: 3,
 		Items: []*domain.TodoItem{
 			{
@@ -570,7 +570,7 @@ func TestCheckItem(t *testing.T) {
 		t.Error("the item should be a todo list")
 	}
 	expected := &domain.TodoList{
-		ID:      id,
+		ID:      id.String(),
 		Version: 4,
 		Items: []*domain.TodoItem{
 			{
@@ -657,7 +657,7 @@ func TestCheckAllItems(t *testing.T) {
 		t.Error("the item should be a todo list")
 	}
 	expected := &domain.TodoList{
-		ID:      id,
+		ID:      id.String(),
 		Version: 5,
 		Items: []*domain.TodoItem{
 			{

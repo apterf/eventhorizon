@@ -80,7 +80,7 @@ func TestReadRepo(t *testing.T) {
 func extraRepoTests(t *testing.T, ctx context.Context, r *Repo) {
 	// Insert a custom item.
 	modelCustom := &mocks.Model{
-		ID:        uuid.New(),
+		ID:        uuid.New().String(),
 		Content:   "modelCustom",
 		CreatedAt: time.Date(2009, time.November, 10, 23, 0, 0, 0, time.UTC),
 	}
@@ -125,7 +125,7 @@ func extraRepoTests(t *testing.T, ctx context.Context, r *Repo) {
 	}
 
 	modelCustom2 := &mocks.Model{
-		ID:      uuid.New(),
+		ID:      uuid.New().String(),
 		Content: "modelCustom2",
 	}
 	if err := r.Collection(ctx, func(c *mgo.Collection) error {
@@ -133,7 +133,7 @@ func extraRepoTests(t *testing.T, ctx context.Context, r *Repo) {
 	}); err != nil {
 		t.Error("there should be no error:", err)
 	}
-	model, err := r.Find(ctx, modelCustom2.ID)
+	model, err := r.Find(ctx, modelCustom2.EntityID())
 	if err != nil {
 		t.Error("there should be no error:", err)
 	}

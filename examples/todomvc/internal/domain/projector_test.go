@@ -49,7 +49,7 @@ func TestProjector(t *testing.T) {
 			&TodoList{},
 			eh.NewEventForAggregate(Created, nil, TimeNow(), AggregateType, id, 1),
 			&TodoList{
-				ID:        id,
+				ID:        id.String(),
 				Version:   1,
 				Items:     []*TodoItem{},
 				CreatedAt: TimeNow(),
@@ -66,7 +66,7 @@ func TestProjector(t *testing.T) {
 		},
 		"item added": {
 			&TodoList{
-				ID:        id,
+				ID:        id.String(),
 				Version:   1,
 				Items:     []*TodoItem{},
 				CreatedAt: TimeNow(),
@@ -76,7 +76,7 @@ func TestProjector(t *testing.T) {
 				Description: "desc 1",
 			}, TimeNow(), AggregateType, id, 1),
 			&TodoList{
-				ID:      id,
+				ID:      id.String(),
 				Version: 2,
 				Items: []*TodoItem{
 					{
@@ -92,7 +92,7 @@ func TestProjector(t *testing.T) {
 		},
 		"item removed": {
 			&TodoList{
-				ID:      id,
+				ID:      id.String(),
 				Version: 1,
 				Items: []*TodoItem{
 					{
@@ -112,7 +112,7 @@ func TestProjector(t *testing.T) {
 				ItemID: 2,
 			}, TimeNow(), AggregateType, id, 1),
 			&TodoList{
-				ID:      id,
+				ID:      id.String(),
 				Version: 2,
 				Items: []*TodoItem{
 					{
@@ -128,7 +128,7 @@ func TestProjector(t *testing.T) {
 		},
 		"item removed (last)": {
 			&TodoList{
-				ID:      id,
+				ID:      id.String(),
 				Version: 1,
 				Items: []*TodoItem{
 					{
@@ -143,7 +143,7 @@ func TestProjector(t *testing.T) {
 				ItemID: 1,
 			}, TimeNow(), AggregateType, id, 1),
 			&TodoList{
-				ID:        id,
+				ID:        id.String(),
 				Version:   2,
 				Items:     []*TodoItem{},
 				CreatedAt: TimeNow(),
@@ -153,7 +153,7 @@ func TestProjector(t *testing.T) {
 		},
 		"item description set": {
 			&TodoList{
-				ID:      id,
+				ID:      id.String(),
 				Version: 1,
 				Items: []*TodoItem{
 					{
@@ -174,7 +174,7 @@ func TestProjector(t *testing.T) {
 				Description: "new desc",
 			}, TimeNow(), AggregateType, id, 1),
 			&TodoList{
-				ID:      id,
+				ID:      id.String(),
 				Version: 2,
 				Items: []*TodoItem{
 					{
@@ -195,7 +195,7 @@ func TestProjector(t *testing.T) {
 		},
 		"item checked": {
 			&TodoList{
-				ID:      id,
+				ID:      id.String(),
 				Version: 1,
 				Items: []*TodoItem{
 					{
@@ -216,7 +216,7 @@ func TestProjector(t *testing.T) {
 				Checked: true,
 			}, TimeNow(), AggregateType, id, 1),
 			&TodoList{
-				ID:      id,
+				ID:      id.String(),
 				Version: 2,
 				Items: []*TodoItem{
 					{
